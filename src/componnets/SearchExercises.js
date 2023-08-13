@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Box, Button, Typography, Stack, TextField } from "@mui/material";
 import { fetchData, exersiceOptions } from "../utils";
+import HorizontalScrollBar from "./HorizontalScrollBar";
 
-const SearchExercises = () => {
+const SearchExercises = ({bodyPart, setBodyPart, setSearchExercises}) => {
   const [search, setSearch] = useState("");
-  const [searchExercises, setSearchExercises] = useState([]);
   const [bodyPartsData, setBodyPartsData] = useState([]);
 
   useEffect(() => {
@@ -84,7 +84,7 @@ const SearchExercises = () => {
 
       {/* category- fetch from the api */}
       <Box sx={{position: "relative", width: '100%', p: '20px'}}>
-        <HorizontalScrollBar data={bodyPartsData} />
+        <HorizontalScrollBar data={bodyPartsData} bodyPart={bodyPart} setBodyPart={setBodyPart}/>
 
       </Box>
     </Stack>
