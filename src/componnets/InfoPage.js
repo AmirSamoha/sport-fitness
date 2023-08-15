@@ -1,6 +1,8 @@
 import React from "react";
 import { Box, Button,Typography } from "@mui/material";
 import banner from "../assets/images/banner.png";
+
+
 const InfoPage = () => {
   return (
     <Box

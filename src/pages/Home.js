@@ -9,6 +9,7 @@ const Home = () => {
   const [searchExercises, setSearchExercises] = useState([]);
   return (
     <Box>
+      
       <InfoPage />
 
       <SearchExercises
@@ -20,9 +21,9 @@ const Home = () => {
       <Exercises
         setSearchExercises={setSearchExercises}
         bodyPart={bodyPart}
-        setBodyPart={setBodyPart}
+        searchExercises={searchExercises}
       />
-      
+
     </Box>
   );
 };
