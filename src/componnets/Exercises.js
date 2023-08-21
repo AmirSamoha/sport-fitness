@@ -6,7 +6,19 @@ import { exersiceOptions, fetchData } from "../utils";
 import ExerciseCard from "./ExerciseCard";
 
 const Exercises = ({ setSearchExercises, bodyPart, searchExercises }) => {
-  console.log(searchExercises);
+  const [currentPage, setCurrentPage] = useState(1);
+  const exercisesPerPage = 9;
+
+  const indexOfLastExercise = currentPage * exercisesPerPage;
+  const indexOfFirstExercise = indexOfLastExercise - exercisesPerPage; // will be the first exercise in the new page
+  const currentExercises = searchExercises.slice(indexOfFirstExercise, indexOfLastExercise)
+
+  const paginte = (e, value) => {
+    setCurrentPage(value);
+
+    window.scrollTo({top: 1800, behavior: 'smooth'})
+  };
+
   return (
     <Box id="exercises" sx={{ mt: { lg: "110px" } }} mt="50px" p="20px">
       <Typography variant="h3" mb="46px">
@@ -19,11 +31,23 @@ const Exercises = ({ setSearchExercises, bodyPart, searchExercises }) => {
         flexWrap="wrap"
         justifyContent="center"
       >
-
-        {searchExercises.map((exercise, index) => (
+        {currentExercises.map((exercise, index) => (
           <ExerciseCard key={index} exercise={exercise} />
         ))}
-        
+      </Stack>
+
+      <Stack mt="100px" alignItems="center">
+        {searchExercises.length > 9 && (
+          <Pagination
+            color="standard"
+            shape="rounded"
+            defaultPage={1}
+            count={Math.ceil(searchExercises.length / exercisesPerPage)} // show the number of exercises per page page
+            page={currentPage}
+            onChange={paginte}
+            size="large"
+          />
+        )}
       </Stack>
     </Box>
   );

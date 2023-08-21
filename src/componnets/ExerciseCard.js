@@ -46,6 +46,7 @@ const ExerciseCard = ({ exercise }) => {
         >
           {exercise.equipment}
         </Button>
+        
       </Stack>
 
       <Typography
