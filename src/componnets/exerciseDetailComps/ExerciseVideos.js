@@ -7,7 +7,7 @@ const ExerciseVideos = ({ youtubeDetails, name }) => {
   }
 
   return (
-    <Box p="20px" sx={{ marginTop: { lg: "200px", xs: "20px" } }}>
+    <Box p="20px" sx={{ marginTop: { lg: "150px", xs: "20px" } }}>
       <Typography variant="h3" mb="33px">
         Watch <span style={{ color: "#FF2625" }}>{name}</span> exercise videos
       </Typography>
@@ -18,7 +18,7 @@ const ExerciseVideos = ({ youtubeDetails, name }) => {
         alignItems="center"
         sx={{
           flexDirection: { lg: "row", xs: "column" },
-          gap: { lg: "110px", xs: "0" },
+          gap: { lg: "80px", xs: "0" },
         }}
       >
         {youtubeDetails?.slice(0, 3).map((item, index) => (
@@ -34,8 +34,8 @@ const ExerciseVideos = ({ youtubeDetails, name }) => {
               <Typography variant="h5" color="#000">
                 {item.video.title}
               </Typography>
-              <Typography variant="h6" color="gray">
-                {item.video.description.slice(0, 50)}
+              <Typography variant="h6" color="gray ">
+                {item.video.channelName}
               </Typography>
             </Box>
           </a>

@@ -11,6 +11,8 @@ const ExerciseDetail = () => {
   const { id } = useParams();
   const [exercsieDetails, setexercsieDetails] = useState({});
   const [youtubeDetails, setYoutubeDetails] = useState([]);
+  const [targetExercise, setTargetExercise] = useState([]);
+  const [equipmentExercises, setEquipmentExercises] = useState([]);
 
   useEffect(() => {
     const fetchDetailsData = async() => {
@@ -24,17 +26,24 @@ const ExerciseDetail = () => {
       //fetch the data of the exercise from youTube(rapidApi) by name from exerciseDetailData
       const youtubeExercises = await fetchData(`${youtubeSearchUrl}/search?query=${exerciseDetailData.name}`, youtubeOptions)
       setYoutubeDetails(youtubeExercises.contents)
+
+      //fetch similar exercises by the same target
+      const similarTargetExercisesData = await fetchData(`${exerciseUrl}/exercises/target/${exerciseDetailData.target}`, exersiceOptions);
+      setTargetExercise(similarTargetExercisesData)
+
+      //fetch similar exercises by the same equipment
+      const equipmentExercisesData = await fetchData(`${exerciseUrl}/exercises/equipment/${exerciseDetailData.equipment}`, exersiceOptions);
+      setEquipmentExercises(equipmentExercisesData)
     }
 
     fetchDetailsData()
   },[id]);
- console.log(youtubeDetails)
 
   return (
     <Box>
       <Detail exercsieDetails={exercsieDetails} />
       <ExerciseVideos youtubeDetails={youtubeDetails} name={exercsieDetails.name}/>
-      <SimilarExercises />
+      <SimilarExercises targetExercise={targetExercise} equipmentExercises={equipmentExercises} />
     </Box>
   );
 };
