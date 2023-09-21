@@ -34,7 +34,7 @@ const HorizontalScrollBar = ({ data, bodyPart, setBodyPart, isBodyParts }) => {
           <Box
             m="0"
             key={category.id || category}
-            itemId={category.id || category}
+            itemID={category.id || category}
             title={category.id || category}
           >
             {/* pass the single categoty to BodyPart componnents +  isBodyParts come from the searchExercise comp*/}

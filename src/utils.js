@@ -1,4 +1,3 @@
-
 export const exersiceOptions = {
   method: "GET",
   headers: {
@@ -11,7 +10,15 @@ export const youtubeOptions = {
   method: "GET",
   headers: {
     "X-RapidAPI-Key": process.env.REACT_APP_RAPID_KEY,
-    "X-RapidAPI-Host": "youtube-search-and-download.p.rapidapi.com",
+    "X-RapidAPI-Host": "mega-fitness-calculator1.p.rapidapi.com",
+  },
+};
+
+export const bmiOptions = {
+  method: "GET",
+  headers: {
+    "X-RapidAPI-Key": process.env.REACT_APP_RAPID_KEY,
+    "X-RapidAPI-Host": "fitness-calculator.p.rapidapi.com",
   },
 };
 
@@ -24,5 +31,3 @@ export const fetchData = async (url, options) => {
     console.error(error);
   }
 };
-
-
