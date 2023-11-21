@@ -1,6 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
-import dotenv from "dotenv"
+import dotenv from "dotenv";
+import User from "./models/users.js";
 
 dotenv.config();
 
@@ -38,5 +39,19 @@ app.post("/post", (req, res) => {
     }
   } catch (error) {
     res.send({ status: "something went wrong trying again" });
+  }
+});
+
+app.post("/register", async (req, res) => {
+  const { username, email, phoneNumber } = req.body;
+  try {
+    await User.create({
+        username: username,
+        email: email,
+        phoneNumber: phoneNumber,
+    });
+    res.send({ status: "success created new user" });
+  } catch (error) {
+    res.send({ status: "error to created new user" });
   }
 });
