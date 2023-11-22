@@ -2,9 +2,10 @@ import mongoose from "mongoose";
 
 const userScehma = new mongoose.Schema(
   {
-    username: String,
-    email: String,
-    phoneNumber: String,
+    firstName: String,
+    lastName: String,
+    email: {type: String, unique: true},
+    password: String,
   },
   {
     collation: "UserInfo",

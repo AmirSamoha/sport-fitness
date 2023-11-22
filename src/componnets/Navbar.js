@@ -9,9 +9,9 @@ const Navbar = () => {
       direction="row"
       justifyContent="space-around"
       sx={{
-        gap: { sm: "122px", xs: "40px" },
+        gap: { sm: "122px", xs: "30px" },
         mt: { sm: "32px", xs: "20px" },
-        px:"20px",
+        px:{ sm: "20px", xs: "5px" },
         justifyContent: "none"
       }}
     >
@@ -19,11 +19,11 @@ const Navbar = () => {
         <img
           src={Logo}
           alt="logo"
-          style={{ width: "48px", height: "48", margin: "0 20px" }}
+          style={{ width: "48px", height: "48", margin: "0 15px" }}
         />
       </Link>
 
-      <Stack direction="row" gap="40px" fontSize="24px" alignItems="flex-end">
+      <Stack direction="row" gap={{ sm: "40px", xs: "5px" }} fontSize={{ sm: "22px", xs: "16px" }} alignItems="flex-end" >
         <Link
           to="/"
           style={{
@@ -36,7 +36,7 @@ const Navbar = () => {
         </Link>
 
         <a
-          href="#exercises"
+          href="#exercises || / "
           style={{ textDecoration: "none", color: "#3A1212" }}
         >
           Exercises
@@ -50,6 +50,25 @@ const Navbar = () => {
           }}
         >
           BMI calculet
+        </Link>
+
+        <Link
+          to="/sign-in"
+          style={{
+            textDecoration: "none",
+            color: "#3A1212",
+          }}
+        >
+          Login
+        </Link>
+        <Link
+          to="/sign-up"
+          style={{
+            textDecoration: "none",
+            color: "#3A1212",
+          }}
+        >
+          Sign up
         </Link>
       </Stack>
       

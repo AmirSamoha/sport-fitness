@@ -33,7 +33,7 @@ const BmiCalculatorGet = () => {
       <Typography variant="h5">Want to Know what is your BMI?</Typography>
       <p>Enter your data</p>
 
-      <Box component="form" display={"flex"} flexWrap={"wrap"}>
+      <Box display={"flex"} flexWrap={"wrap"}>
         <TextField
           id="outlined-controlled"
           type="number"
@@ -84,8 +84,8 @@ const BmiCalculatorGet = () => {
       </Box>
 
       <Stack mt="10px">
-        <Typography variant="h3" color='#ffa9a9'>your result:</Typography>
-        <Typography variant="h5">your bmi is: {bmi?.bmi}</Typography>
+        {/* <Typography variant="h3" color='#ffa9a9'>your result:</Typography> */}
+        <Typography variant="h5" color='#ffa9a9'>your bmi is: {bmi?.bmi}</Typography>
         <Typography variant="h5">the health: {bmi?.health}</Typography>
         <Typography variant="h5">range bmi healthy: {bmi?.healthy_bmi_range}</Typography>
       </Stack>

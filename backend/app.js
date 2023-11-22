@@ -1,12 +1,15 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import cors from "cors";
+import bcrypt from "bcryptjs";
 import User from "./models/users.js";
 
 dotenv.config();
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 
 mongoose
@@ -22,36 +25,44 @@ mongoose
   });
 
 const port = process.env.PORT || 5000;
-
 app.listen(port, () => {
   console.log(`server runnig on http://localhost:${port}`);
 });
 
-app.post("/post", (req, res) => {
-  console.log(req.body);
-  const { data } = req.body;
-
-  try {
-    if (data === "amir") {
-      res.send({ status: "success", data: data });
-    } else {
-      res.send({ status: "User not found" });
-    }
-  } catch (error) {
-    res.send({ status: "something went wrong trying again" });
-  }
-});
-
 app.post("/register", async (req, res) => {
-  const { username, email, phoneNumber } = req.body;
+  const { firstName, lastName, email, password } = req.body;
+  const bcryptPassword = await bcrypt.hash(password, 10);
+  const userExist = await User.findOne({ email: email }).collation({ locale: 'en', strength: 2 });
+  if (userExist) {
+    return res.status(401).json({ message: `username or email already exists` });
+  }
+
   try {
     await User.create({
-        username: username,
-        email: email,
-        phoneNumber: phoneNumber,
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      password: bcryptPassword,
     });
-    res.send({ status: "success created new user" });
+    return res.send({ status: "success created new user" });
   } catch (error) {
-    res.send({ status: "error to created new user" });
+    console.error("Error during user registration:", error);
+    res.status(500).send({ status: "error to create new user" });
   }
 });
+
+// app.post("/register", async (req, res) => {
+//   const { firstName, lastName, email, password } = req.body;
+
+//   try {
+//     await User.create({
+//       firstName,
+//       lastName,
+//       email,
+//       password,
+//     });
+//     res.send({ status: "success created new user" });
+//   } catch (error) {
+//     res.send({ status: "error", error });
+//   }
+// });
