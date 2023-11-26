@@ -23,7 +23,14 @@ const Login = () => {
       })
 
       const data = await response.json()
-      console.log(data)
+      console.log(data, "userLogin")
+      if (data.status == "ok") {
+        alert("login successful")
+        window.localStorage.setItem("token", data.data)
+        window.location.href = "./userDetails"
+      }else{
+        alert("login failed try again") 
+      }
       
     } catch (error) {
       console.error("Error during login:", error);

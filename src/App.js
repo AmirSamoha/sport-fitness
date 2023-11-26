@@ -8,6 +8,7 @@ import Footer from "./componnets/Footer";
 import Bmi from "./pages/Bmi";
 import Login from "./pages/Login/Login";
 import Signup from "./pages/Login/Signup";
+import UserDetails from "./pages/Login/UserDetails";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/bmi" element={<Bmi />} />
         <Route path="/sign-in" element={<Login />} />
         <Route path="/sign-up" element={<Signup />} />
+        <Route path="/userDetails" element={<UserDetails />} />
       </Routes>
 
       <Footer />

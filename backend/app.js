@@ -8,7 +8,6 @@ import User from "./models/users.js";
 
 dotenv.config();
 
-
 const app = express();
 
 app.use(cors());
@@ -65,20 +64,37 @@ app.post("/login-user", async (req, res) => {
   const userExist = await User.findOne({ email: email }).collation({
     locale: "en",
     strength: 2,
-  });;
+  });
 
   if (!userExist) {
     return res.status(404).send({ status: "User not found" });
   }
 
   if (bcrypt.compareSync(password, userExist.password)) {
-    const token = jwt.sign({}, process.env.JWT_SECRET);
+    const token = jwt.sign({ email: userExist.email }, process.env.JWT_SECRET);
 
     if (res.status(201)) {
-      return res.json({ status: "ok- succses to login", token: token });
+      return res.json({ status: "ok", data: token });
     } else {
-      return res.json({ status: "error to login"});
+      return res.json({ status: "error to login" });
     }
   }
   res.json({ status: "Invalid Token" });
+});
+
+app.post("/userVerify", async (req, res) => {
+  const { token } = req.body;
+  try {
+    const user = jwt.verify(token, process.env.JWT_SECRET);
+    const userEmail = user.email;
+    const data = await User.findOne({ email: userEmail }).collation({
+      locale: "en",
+      strength: 2,
+    });
+
+    res.status(200).send({ status: "ok", data: data });
+  } catch (error) {
+    console.error("Error during user verification:", error);
+    res.status(500).send({ status: "error", data: error.message });
+  }
 });

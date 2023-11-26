@@ -28,6 +28,7 @@ const Signup = () => {
 
       const data = await response.json();
       console.log(data, "UserInfo");
+      //window.location.href = "./sign-in"
     } catch (error) {
       console.error("Error during registration:", error);
     }
@@ -44,6 +45,7 @@ const Signup = () => {
           type="text"
           className="form-control"
           placeholder="First name"
+          required
           onChange={(e) => setFirstName(e.target.value)}
         />
       </div>
@@ -54,6 +56,7 @@ const Signup = () => {
           type="text"
           className="form-control"
           placeholder="Last name"
+          required
           onChange={(e) => setLastName(e.target.value)}
         />
       </div>
@@ -64,6 +67,7 @@ const Signup = () => {
           type="email"
           className="form-control"
           placeholder="Enter email"
+          required
           onChange={(e) => setEmail(e.target.value)}
         />
       </div>
@@ -74,6 +78,7 @@ const Signup = () => {
           type="password"
           className="form-control"
           placeholder="Enter password"
+          required
           onChange={(e) => setPassword(e.target.value)}
         />
       </div>
