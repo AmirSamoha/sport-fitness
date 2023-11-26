@@ -3,9 +3,11 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 import User from "./models/users.js";
 
 dotenv.config();
+
 
 const app = express();
 
@@ -31,10 +33,17 @@ app.listen(port, () => {
 
 app.post("/register", async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
+
   const bcryptPassword = await bcrypt.hash(password, 10);
-  const userExist = await User.findOne({ email: email }).collation({ locale: 'en', strength: 2 });
+
+  const userExist = await User.findOne({ email: email }).collation({
+    locale: "en",
+    strength: 2,
+  });
   if (userExist) {
-    return res.status(401).json({ message: `username or email already exists` });
+    return res
+      .status(401)
+      .json({ message: `username or email already exists` });
   }
 
   try {
@@ -51,18 +60,25 @@ app.post("/register", async (req, res) => {
   }
 });
 
-// app.post("/register", async (req, res) => {
-//   const { firstName, lastName, email, password } = req.body;
+app.post("/login-user", async (req, res) => {
+  const { email, password } = req.body;
+  const userExist = await User.findOne({ email: email }).collation({
+    locale: "en",
+    strength: 2,
+  });;
 
-//   try {
-//     await User.create({
-//       firstName,
-//       lastName,
-//       email,
-//       password,
-//     });
-//     res.send({ status: "success created new user" });
-//   } catch (error) {
-//     res.send({ status: "error", error });
-//   }
-// });
+  if (!userExist) {
+    return res.status(404).send({ status: "User not found" });
+  }
+
+  if (bcrypt.compareSync(password, userExist.password)) {
+    const token = jwt.sign({}, process.env.JWT_SECRET);
+
+    if (res.status(201)) {
+      return res.json({ status: "ok- succses to login", token: token });
+    } else {
+      return res.json({ status: "error to login"});
+    }
+  }
+  res.json({ status: "Invalid Token" });
+});
