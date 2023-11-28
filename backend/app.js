@@ -71,7 +71,9 @@ app.post("/login-user", async (req, res) => {
   }
 
   if (bcrypt.compareSync(password, userExist.password)) {
-    const token = jwt.sign({ email: userExist.email }, process.env.JWT_SECRET);
+    const token = jwt.sign({ email: userExist.email }, process.env.JWT_SECRET, {
+      expiresIn: "10hr",
+    });
 
     if (res.status(201)) {
       return res.json({ status: "ok", data: token });
@@ -85,7 +87,16 @@ app.post("/login-user", async (req, res) => {
 app.post("/userVerify", async (req, res) => {
   const { token } = req.body;
   try {
-    const user = jwt.verify(token, process.env.JWT_SECRET);
+    const user = jwt.verify(token, process.env.JWT_SECRET, (err, res) => {
+      if (err) {
+        return "token expired";
+      }
+      return res;
+    });
+    if (user === "token expired") {
+      return res.send({ status: "error", data: "token expired" });
+    }
+
     const userEmail = user.email;
     const data = await User.findOne({ email: userEmail }).collation({
       locale: "en",

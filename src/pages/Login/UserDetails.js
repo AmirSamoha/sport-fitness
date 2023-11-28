@@ -23,11 +23,11 @@ const UserDetails = () => {
         console.log(data, "userData");
         setUserData(data.data);
 
-        //   if (data.data === "token expired") {
-        //     alert("Token expired. Please log in again.");
-        //     window.localStorage.clear();
-        //     window.location.href = "./sign-in";
-        //   }
+          if (data.data === "token expired") {
+            alert("Token expired. Please log in again.");
+            window.localStorage.clear();
+            window.location.href = "./sign-in";
+          }
       } catch (error) {
         console.error("Error fetching user verification data:", error);
       }
@@ -35,12 +35,18 @@ const UserDetails = () => {
     fetchData();
   }, []);
 
+  const handleLogOut = () => {
+    window.localStorage.clear();
+    window.location.href = "/";
+  };
+
   return (
     <div className="auth-wrapper">
       <div className="auth-inner">
         <div>
           Name<h1>{userData.firstName} {userData.lastName}</h1>
-          Email <h1>{userData.email}</h1>
+          Email <h1>{userData.email}</h1><br />
+          <button className="btn btn-primary" onClick={handleLogOut}>Log out</button>
         </div>
       </div>
     </div>

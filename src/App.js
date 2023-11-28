@@ -11,12 +11,15 @@ import Signup from "./pages/Login/Signup";
 import UserDetails from "./pages/Login/UserDetails";
 
 function App() {
+  const loggedIn = window.localStorage.getItem("loggedIn");
+
   return (
-    <Box width="400px" sx={{width:{xl: '1488px'}}} m="auto">
+    <Box width="400px" sx={{ width: { xl: "1488px" } }} m="auto">
       <Navbar />
 
       <Routes>
-        <Route path="/" element={<Home />} />
+        {/* <Route path="/" element={<Home />} /> */}
+        <Route path="/" element={loggedIn === "true" ? <Home /> : <Login />} />
         <Route path="/exercise/:id" element={<ExerciseDetail />} />
         <Route path="/bmi" element={<Bmi />} />
         <Route path="/sign-in" element={<Login />} />
